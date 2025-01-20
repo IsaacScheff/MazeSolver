@@ -56,21 +56,31 @@ class Cell:
     def draw(self, canvas):
         if(self.has_left_wall):
             left_line = Line(self._x1, self._x1, self._y1, self._y2)
-            left_line.draw(canvas, "red")
+            left_line.draw(canvas, "white")
         if(self.has_right_wall):
             right_line = Line(self._x2, self._x2, self._y1, self._y2)
-            right_line.draw(canvas, "red")
+            right_line.draw(canvas, "white")
         if(self.has_top_wall):
             top_line = Line(self._x1, self._x2, self._y1, self._y1)
-            top_line.draw(canvas, "red")
+            top_line.draw(canvas, "white")
         if(self.has_bottom_wall):
             bottom_line = Line(self._x1, self._x2, self._y2, self._y2)
-            bottom_line.draw(canvas,"red")
+            bottom_line.draw(canvas, "white")
+    
+    def draw_move(self, to_cell, canvas, undo=False):
+        x1 = (self._x1 + self._x2) / 2
+        y1 = (self._y1 + self._y2) / 2
+        x2 = (to_cell._x1 + to_cell._x2) / 2
+        y2 = (to_cell._y1 + to_cell._y2) / 2
+        new_line = Line(x1, x2, y1, y2)
+        color = "red" if undo == False else "gray"
+        new_line.draw(canvas, color)
 
 
 win = Window(800, 600)
 cell_one = Cell(100, 200, 100, 200, False)
 cell_one.draw(win.canvas)
-cell_two = Cell(300, 400, 300, 400, False)
+cell_two = Cell(300, 400, 300, 200, False)
 cell_two.draw(win.canvas)
+cell_one.draw_move(cell_two, win.canvas)
 win.wait_for_close()
