@@ -54,18 +54,18 @@ class Cell:
         self._win = window
     
     def draw(self):
-        if(self.has_left_wall):
-            left_line = Line(self._x1, self._x1, self._y1, self._y2)
-            left_line.draw(self._win.canvas, "white")
-        if(self.has_right_wall):
-            right_line = Line(self._x2, self._x2, self._y1, self._y2)
-            right_line.draw(self._win.canvas, "white")
-        if(self.has_top_wall):
-            top_line = Line(self._x1, self._x2, self._y1, self._y1)
-            top_line.draw(self._win.canvas, "white")
-        if(self.has_bottom_wall):
-            bottom_line = Line(self._x1, self._x2, self._y2, self._y2)
-            bottom_line.draw(self._win.canvas, "white")
+        left_color = "white" if self.has_left_wall else "grey"
+        right_color = "white" if self.has_right_wall else "grey"
+        top_color = "white" if self.has_top_wall else "grey"
+        bottom_color = "white" if self.has_bottom_wall else "grey"
+        left_line = Line(self._x1, self._x1, self._y1, self._y2)
+        left_line.draw(self._win.canvas, left_color)
+        right_line = Line(self._x2, self._x2, self._y1, self._y2)
+        right_line.draw(self._win.canvas, right_color)
+        top_line = Line(self._x1, self._x2, self._y1, self._y1)
+        top_line.draw(self._win.canvas, top_color)
+        bottom_line = Line(self._x1, self._x2, self._y2, self._y2)
+        bottom_line.draw(self._win.canvas, bottom_color)
     
     def draw_move(self, to_cell, undo=False):
         x1 = (self._x1 + self._x2) / 2
@@ -123,7 +123,7 @@ class Maze:
     def _animate(self):
         if self.window is not None: 
             self.window.redraw()
-            time.sleep(0.05)
+            time.sleep(0.02)
 
     def _break_entrance_and_exit(self):
         self._cells[0][0].has_left_wall = False #top left
